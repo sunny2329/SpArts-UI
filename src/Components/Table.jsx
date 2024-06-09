@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import '../index.css'
-import Pagination from './Pagination';
+import Boy from '../boy.jpg'
+import Girl from '../girl.jpg'
 
 
-function Table({ currentPacketIndex, setPacketSize }) {
+function Table({ currentPacketIndex, setPacketSize, searchQuery, setSearchQuery }) {
     const [students, setStudents] = useState([]);
     const packetSize = 6;
 
@@ -26,11 +27,17 @@ function Table({ currentPacketIndex, setPacketSize }) {
         setPacketSize(packets.length);
     }, [packets.length, setPacketSize]);
 
+    const filteredData = students.filter(item =>
+        item.attributes.firstName.toString().toLowerCase().includes(searchQuery.toLowerCase())
+    )
+
+    console.log(filteredData);
+
 
 
 
     return (
-        <div className='w-full overflow-hide h-[55%] hide-scrollbar mt-2'>
+        <div className='w-full overflow-scroll h-[55%] hide-scrollbar mt-2'>
             <table className='w-[94%] ml-[2.5rem] border-[1px] border-gray-400 border-solid rounded-xl'>
                 <tr className='opacity-55 border-[1px] border-gray-400 sticky'>
                     <td className='w-1/12 p-2'>
@@ -45,12 +52,14 @@ function Table({ currentPacketIndex, setPacketSize }) {
                     <td className='w-auto'>Blood group</td>
                 </tr>
                 {
-                    packets.length > 0 && packets[currentPacketIndex].map((student) => (
+                    packets.length > 0 && (searchQuery === "" ? packets[currentPacketIndex].map((student) => (
                         <tr className='border-[1px] border-gray-400 font-bold'>
                             <td className='w-1/12 p-2'>
                                 <input type="checkbox" className='opacity-55' />
                             </td>
-                            <td className='w-1/12'></td>
+                            <td className='w-1/12'>
+                                <img src={student.attributes.gender === 'male' ? Boy : Girl} className='w-[30px] h-[30px] rounded-full' />
+                            </td>
                             <td className='w-[10%]'>{student.id}</td>
                             <td className='w-[12%]'>{student.attributes.firstName}</td>
                             <td className='w-[12%]'>{student.attributes.lastName}</td>
@@ -58,7 +67,22 @@ function Table({ currentPacketIndex, setPacketSize }) {
                             <td className='w-[17%]'>{student.attributes.parentContactNo}</td>
                             <td className='w-[13%]'>{student.attributes.bloodGroup}</td>
                         </tr>
-                    ))
+                    )) : filteredData.map((student) => (
+                        <tr className='border-[1px] border-gray-400 font-bold'>
+                            <td className='w-1/12 p-2'>
+                                <input type="checkbox" className='opacity-55' />
+                            </td>
+                            <td className='w-1/12'>
+                                <img src={student.attributes.gender === 'male' ? Boy : Girl} className='w-[30px] h-[30px] rounded-full' />
+                            </td>
+                            <td className='w-[10%]'>{student.id}</td>
+                            <td className='w-[12%]'>{student.attributes.firstName}</td>
+                            <td className='w-[12%]'>{student.attributes.lastName}</td>
+                            <td className='w-[17%]'>{student.attributes.parentEmailId}</td>
+                            <td className='w-[17%]'>{student.attributes.parentContactNo}</td>
+                            <td className='w-[13%]'>{student.attributes.bloodGroup}</td>
+                        </tr>
+                    )))
                 }
             </table>
 

@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons/faMagnifyingGlass'
 import { faAngleDown, faBell, faTableList } from '@fortawesome/free-solid-svg-icons'
 import Face from '../face.jpg'
-function NavOne() {
+function NavOne({searchQuery, setSearchQuery}) {
+    
     return (
         <div className='flex justify-between items-center p-3 border-[1px] border-b-gray-300 border-l-0 border-r-0 border-t-0 w-full'>
 
@@ -17,7 +18,9 @@ function NavOne() {
             <div className='flex items-center w-[50%] justify-between mr-7'>
                 <div className='search border-2 border-b-gray-500 border-t-0 border-r-0 border-l-0 w-[50%] mr-9'>
                     <FontAwesomeIcon className="text-purple-800" icon={faMagnifyingGlass} />
-                    <input type="text" placeholder='Search' className='ml-2 focus:outline-none' />
+                    <input type="text" placeholder='Search First Name' value={searchQuery} onChange={(e) => {
+                        setSearchQuery(e.target.value)
+                    }} className='ml-2 focus:outline-none' />
                 </div>
 
                 <FontAwesomeIcon className='text-purple-800 text-xl cursor-pointer' icon={faTableList}/>
