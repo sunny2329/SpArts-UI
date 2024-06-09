@@ -4,7 +4,7 @@ import Boy from '../boy.jpg'
 import Girl from '../girl.jpg'
 
 
-function Table({ currentPacketIndex, setPacketSize, searchQuery, setSearchQuery }) {
+function Table({ currentPacketIndex, setPacketSize, searchQuery}) {
     const [students, setStudents] = useState([]);
     const packetSize = 6;
 
