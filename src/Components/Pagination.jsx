@@ -1,8 +1,9 @@
-import React from 'react'
+import React,{useState} from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons'
 
 function Pagination({ setCurrentPacketIndex, currentPacketIndex ,packetSize }) {
+  const [color,setColor] = useState(true)
   const goToNextPacket = () => {
     setCurrentPacketIndex((prevIndex) => (prevIndex + 1) % packetSize);
   }
@@ -19,16 +20,22 @@ function Pagination({ setCurrentPacketIndex, currentPacketIndex ,packetSize }) {
         <div className="left">
           <button 
           disabled = {currentPacketIndex === 0 ? true: false}
-          onClick={goToPreviousPacket}
-          className='flex justify-center items-center border-[1px] border-purple-500 opacity-50 text-purple-800 p-3 rounded-2xl w-[3.5rem] h-[2rem]'>
+          onClick={()=>{
+            goToNextPacket();
+            setColor(false);
+          }}
+          className={`flex justify-center items-center border-[1px] ${!color ? `bg-purple-900 text-white` : `border-purple-500 opacity-50 text-purple-800`}  p-3 rounded-2xl w-[3.5rem] h-[2rem]`}>
             <FontAwesomeIcon icon={faChevronLeft} />
           </button>
         </div>
         <div className="right">
           <button
           disabled = {currentPacketIndex === packetSize - 1 ? true: false} 
-          onClick={goToNextPacket}
-          className='flex justify-center items-center bg-purple-900 text-white p-3 rounded-2xl w-[3.5rem] h-[2rem] ml-4'>
+          onClick={()=>{
+            goToNextPacket();
+            setColor(true);
+          }}
+          className={`flex justify-center items-center ${color ? `bg-purple-900 text-white` : `border-purple-500 text-purple-800 opacity-55`} p-3 rounded-2xl w-[3.5rem] h-[2rem] ml-4 border-[1px]`}>
             <FontAwesomeIcon icon={faChevronRight} />
           </button>
         </div>
